@@ -1,0 +1,35 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avaloniaSplitViewIssueDemo="clr-namespace:AvaloniaSplitViewIssueDemo"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="AvaloniaSplitViewIssueDemo.MainWindow"
+        Title="AvaloniaSplitViewIssueDemo">
+    <Window.Resources>
+        <avaloniaSplitViewIssueDemo:BoolToObjectConverter x:Key="SplitViewDisplayModeConverter"
+                                      TrueObject="{x:Static SplitViewDisplayMode.Inline}"
+                                      FalseObject="{x:Static SplitViewDisplayMode.Overlay}"/>
+    </Window.Resources>
+
+    <Grid RowDefinitions="Auto, *">
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <ToggleButton x:Name="OpenPane">Open Pane</ToggleButton>
+            <ToggleButton x:Name="FixPane">Fix Pane</ToggleButton>
+        </StackPanel>
+        <SplitView Grid.Row="1"
+                   IsPaneOpen="{Binding #OpenPane.IsChecked, Mode=TwoWay}"
+                   DisplayMode="{Binding #FixPane.IsChecked, Converter={StaticResource SplitViewDisplayModeConverter}}">
+            <SplitView.Pane>
+                <Panel>
+                    <Border Background="LightSalmon">
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">SplitView.Pane</TextBlock>
+                    </Border>
+                </Panel>
+            </SplitView.Pane>
+            <Panel Background="LightBlue">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">This is a SplitView.</TextBlock>
+            </Panel>
+        </SplitView>
+    </Grid>
+</Window>
